@@ -17,44 +17,106 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
-        tile = new Tile[50];
+        tile = new Tile[100];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
         loadMap("/maps/world01.txt");
     }
     public void getTileImage() {
-        setup(0, "grass00", false);
-        setup(1, "grass00", false);
-        setup(2, "grass00", false);
-        setup(3, "grass00", false);
-        setup(4, "grass00", false);
-        setup(5, "grass00", false);
-        setup(6, "grass00", false);
-        setup(7, "grass00", false);
-        setup(8, "grass00", false);
-        setup(9, "grass00", false);
+        setup(0, "0001", false);
+        setup(1, "0002", false);
+        setup(2, "0003", false);
+        setup(3, "0004", false);
+        setup(4, "0005", false);
+        setup(5, "0006", false);
+        setup(6, "0007", false);
+        setup(7, "0008", false);
+        setup(8, "0009", false);
+        setup(9, "0010", false);
+        setup(10, "0011", false);
+        setup(11, "0012", false);
 
-        setup(10, "grass", false);
-        setup(11, "grass", false);
-        setup(12, "grass", false);
-        setup(13, "grass", false);
-        setup(14, "grass", false);
-        setup(15, "grass", false);
+        setup(12, "0013", false);
+        setup(13, "0014", false);
+        setup(14, "0015", false);
+        setup(15, "0016", false);
+        setup(16, "0017", false);
+        setup(17, "0018", false);
+        setup(18, "0019", false);
+        setup(19, "0020", false);
+        setup(20, "0021", false);
+        setup(21, "0022", false);
+        setup(22, "0023", false);
+        setup(23, "0024", false);
+        setup(24, "0025", false);
+        setup(25, "0026", false);
 
-        setup(16, "earth", false);
-        setup(17, "earth", false);
-        setup(18, "earth", false);
-        setup(19, "earth", false);
-        setup(20, "earth", false);
-        setup(21, "earth", false);
+        setup(26, "0027", false);
+        setup(27, "0028", false);
+        setup(28, "0029", false);
+        setup(29, "0030", false);
+        setup(30, "0031", false);
+        setup(31, "0032", false);
+        setup(32, "0033", false);
+        setup(33, "0034", false);
+        setup(34, "0035", false);
+        setup(35, "0036", false);
+        setup(36, "0037", false);
+        setup(37, "0038", false);
+        setup(38, "0039", false);
+        setup(39, "0040", false);
+        setup(40, "0041", false);
+        setup(41, "0042", false);
+        setup(42, "0043", false);
+        setup(43, "0044", false);
+        setup(44, "0045", false);
+        setup(45, "0046", false);
+        setup(46, "0047", false);
 
-        setup(22, "castle", true);
-        setup(23, "castle", true);
-        setup(24, "castle", true);
-        setup(25, "castle", true);
-        setup(26, "castle", true);
-        setup(27, "castle", true);
+        setup(47, "0048", false);
+        setup(48, "0049", false);
+        setup(49, "0050", false);
+        setup(50, "0051", false);
+        setup(51, "0052", false);
+        setup(52, "0053", false);
+        setup(53, "0054", false);
+        setup(54, "0055", false);
+        setup(55, "0056", false);
+        setup(56, "0057", false);
+        setup(57, "0058", false);
+        setup(58, "0059", false);
+        setup(59, "0060", false);
+        setup(60, "0061", false);
+        setup(61, "0062", false);
+        setup(62, "0063", false);
+        setup(63, "0064", false);
+        setup(64, "0065", false);
+        setup(65, "0066", false);
+        setup(66, "0067", false);
+        setup(67, "0068", false);
+
+        setup(68, "0069", false);
+        setup(69, "0070", false);
+        setup(70, "0071", false);
+        setup(71, "0072", false);
+        setup(72, "0073", false);
+        setup(73, "0074", false);
+        setup(74, "0075", false);
+        setup(75, "0076", false);
+        setup(76, "0077", false);
+        setup(77, "0078", false);
+        setup(78, "0079", false);
+        setup(79, "0080", false);
+        setup(80, "0081", false);
+        setup(81, "0082", false);
+        setup(82, "0083", false);
+        setup(83, "0084", false);
+        setup(84, "0085", false);
+        setup(85, "0086", false);
+        setup(86, "0087", false);
+
+
     }
     public void setup(int index, String imageName, boolean collision) {
         UtilityTool uTool = new UtilityTool();
