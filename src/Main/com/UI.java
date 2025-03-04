@@ -53,11 +53,22 @@ public class UI {
         messageOn = true;
     }
 
+    private void drawOutlinedText(Graphics2D g2, String text, int x, int y, Color textColor, Color outlineColor) {
+        // Draw the outline by drawing the text in the outline color with slight offsets
+        g2.setColor(outlineColor);
+        g2.drawString(text, x - 1, y - 1);
+        g2.drawString(text, x + 1, y - 1);
+        g2.drawString(text, x - 1, y + 1);
+        g2.drawString(text, x + 1, y + 1);
+
+        // Draw the actual text in the center
+        g2.setColor(textColor);
+        g2.drawString(text, x, y);
+    }
+
     public void draw(Graphics2D g2) {
         if (gameFinished) {
             g2.setFont(arial_40);
-            g2.setColor(Color.yellow);
-
             String text;
             int textLength;
             int x;
@@ -67,27 +78,32 @@ public class UI {
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth / 2 - textLength / 2;
             y = gp.screenHeight / 2 - (gp.tileSize * 3);
-            g2.drawString(text, x, y);
+            drawOutlinedText(g2, text, x, y, Color.yellow, Color.black);
 
             g2.setFont(arial_80B);
-            g2.setColor(Color.yellow);
             text = "Congratulations!";
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth / 2 - textLength / 2;
             y = gp.screenHeight / 2 + (gp.tileSize * 2);
-            g2.drawString(text, x, y);
+            drawOutlinedText(g2, text, x, y, Color.yellow, Color.black);
 
             gp.gameThread = null;
         } else {
             g2.setFont(arial_40);
-            g2.setColor(Color.white);
             g2.drawImage(keyImage, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.hasKey, 74, 65);
+
+            // Draw the key count with an outline
+            String keyText = "x " + gp.player.hasKey;
+            int x = 74;
+            int y = 65;
+            drawOutlinedText(g2, keyText, x, y, Color.white, Color.black);
 
             // MESSAGE
             if (messageOn) {
                 g2.setFont(g2.getFont().deriveFont(30F));
-                g2.drawString(message, gp.tileSize / 2, gp.tileSize * 5);
+                x = gp.tileSize / 2;
+                y = gp.tileSize * 5;
+                drawOutlinedText(g2, message, x, y, Color.white, Color.black);
 
                 messageCounter++;
                 if (messageCounter > 120) {
@@ -114,7 +130,7 @@ public class UI {
             }
 
             if (showInstruction) {
-                int x = gp.screenWidth / 2 - hsInstructionImage.getWidth() / 2;
+                x = gp.screenWidth / 2 - hsInstructionImage.getWidth() / 2;
                 g2.drawImage(hsInstructionImage, x, instructionY, null);
             }
         }
