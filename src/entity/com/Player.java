@@ -19,6 +19,20 @@ public class Player extends Entity {
     boolean moving = false;
     int pixelCounter = 0;
 
+    // Hardware and Software phases
+    private boolean hardwarePhase = true;
+    private boolean softwarePhase = false;
+    private long startTime;
+    private boolean hardwareTextShown = false;
+
+    // Hardware items
+    private String[] hardwareItems = {"Computer", "System Unit", "Mouse", "Speaker", "Printer"};
+    private int hardwareItemsCollected = 0;
+
+    // Software items
+    private String[] softwareItems = {"Chrome", "Windows", "Facebook", "Picsart"};
+    private int softwareItemsCollected = 0;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
@@ -36,13 +50,18 @@ public class Player extends Entity {
 
         setDefaultValues();
         getPlayerImage();
+
+        // Record the start time
+        startTime = System.currentTimeMillis();
     }
+
     public void setDefaultValues() {
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
         speed = 4;
         direction = "down";
     }
+
     public void getPlayerImage() {
         up1 = setup("1W");
         up2 = setup("2W");
@@ -53,6 +72,7 @@ public class Player extends Entity {
         right1 = setup("1D");
         right2 = setup("2D");
     }
+
     public BufferedImage setup(String imageName) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
@@ -66,6 +86,13 @@ public class Player extends Entity {
     }
 
     public void update() {
+        // Check if 5 seconds have passed to show "Hardware" text
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - startTime > 10000 && !hardwareTextShown) {
+            gp.ui.showMessage("Category: Hardware");
+            hardwareTextShown = true;
+        }
+
         if (moving == false) {
             if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed || keyH.rightPressed) {
 
@@ -88,8 +115,7 @@ public class Player extends Entity {
                 // CHECK OBJECT COLLISION
                 int objIndex = gp.cChecker.checkObject(this, true);
                 pickUpObject(objIndex);
-            }
-            else {
+            } else {
                 standCounter++;
 
                 if (standCounter == 20) {
@@ -120,8 +146,7 @@ public class Player extends Entity {
             if (spriteCounter > 12) {
                 if (spriteNum == 1) {
                     spriteNum = 2;
-                }
-                else if (spriteNum == 2) {
+                } else if (spriteNum == 2) {
                     spriteNum = 1;
                 }
                 spriteCounter = 0;
@@ -138,84 +163,91 @@ public class Player extends Entity {
         if (i != 999) {
             String objectName = gp.obj[i].name;
 
-            switch (objectName) {
-                case "Key":
-                    gp.playSE(1);
-                    hasKey++;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got a key!");
-                    break;
-                case "Door":
-                    if (hasKey > 0) {
-                        gp.playSE(3);
-                        gp.obj[i] = null;
-                        hasKey--;
-                        gp.ui.showMessage("You opened the door!");
-                    }
-                    else {
-                        gp.ui.showMessage("You need a key!");
-                    }
-                    break;
-                case "Computer":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got the monitor with a keyboard!");
-                    break;
-                case "System Unit":
+            // Keys can be collected anytime
+            if (objectName.equals("Key")) {
+                gp.playSE(1);
+                hasKey++;
+                gp.obj[i] = null;
+                gp.ui.showMessage("You got a key!");
+                return;
+            }
+
+            // Doors can be unlocked anytime as long as the player has keys
+            if (objectName.equals("Lock")) {
+                if (hasKey > 0) {
                     gp.playSE(3);
                     gp.obj[i] = null;
-                    gp.ui.showMessage("You got the System Unit!");
-                case "Mouse":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("Mouse found!");
-                    break;
-                case "Speaker":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You found the speaker!");
-                    break;
-                case "Printer":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("Printer is found!");
-                    break;
-                case "Chrome":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("Chrome!");
-                    break;
-                case "Windows":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("Windows!");
-                    break;
-                case "Facebook":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("Facebook!");
-                    break;
-                case "Picsart":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("Picsart!");
-                    break;
-                case "Chess":
+                    hasKey--;
+                    gp.ui.showMessage("You opened the door!");
+                } else {
+                    gp.ui.showMessage("You need a key!");
+                }
+                return;
+            }
+
+            // Chess can only be collected after all items are collected
+            if (objectName.equals("Chess")) {
+                if (hardwareItemsCollected == hardwareItems.length && softwareItemsCollected == softwareItems.length) {
                     gp.ui.gameFinished = true;
                     gp.stopMusic();
                     gp.playSE(4);
-                    break;
+                } else {
+                    gp.ui.showMessage("You need to collect all items first!");
+                }
+                return;
+            }
+
+            // Handle hardware and software items
+            if (hardwarePhase) {
+                for (String item : hardwareItems) {
+                    if (objectName.equals(item)) {
+                        gp.playSE(3);
+                        gp.obj[i] = null;
+                        hardwareItemsCollected++;
+                        gp.ui.showMessage("You got the " + item + "!");
+                        checkHardwareCompletion();
+                        return;
+                    }
+                }
+                // If it's not a hardware item, play error sound
+                gp.playSE(5); // Assuming 5 is the index for error sound
+                gp.ui.showMessage("This is not a hardware item!");
+            } else if (softwarePhase) {
+                for (String item : softwareItems) {
+                    if (objectName.equals(item)) {
+                        gp.playSE(3);
+                        gp.obj[i] = null;
+                        softwareItemsCollected++;
+                        gp.ui.showMessage("You got the " + item + "!");
+                        checkSoftwareCompletion();
+                        return;
+                    }
+                }
+                // If it's not a software item, play error sound
+                gp.playSE(5); // Assuming 5 is the index for error sound
+                gp.ui.showMessage("This is not a software item!");
             }
         }
     }
 
-    public void draw(Graphics2D g2) {
-//        g2.setColor(Color.white);
-//        g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+    private void checkHardwareCompletion() {
+        if (hardwareItemsCollected == hardwareItems.length) {
+            hardwarePhase = false;
+            softwarePhase = true;
+            gp.ui.showMessage("Category: Software");
+        }
+    }
 
+    private void checkSoftwareCompletion() {
+        if (softwareItemsCollected == softwareItems.length) {
+            gp.ui.showMessage("You have collected all software items!");
+        }
+    }
+
+    public void draw(Graphics2D g2) {
         BufferedImage image = null;
 
-        switch(direction) {
+        switch (direction) {
             case "up":
                 if (spriteNum == 1) {
                     image = up1;
@@ -246,9 +278,9 @@ public class Player extends Entity {
                 }
                 if (spriteNum == 2) {
                     image = right2;
-                };
+                }
                 break;
         }
-        g2.drawImage(image, screenX, screenY,null);
+        g2.drawImage(image, screenX, screenY, null);
     }
 }
