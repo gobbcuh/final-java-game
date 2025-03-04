@@ -1,7 +1,7 @@
 package Main.com;
 
 import object.com.OBJ_Key;
-import object.com.OBJ_HSInstruction; // Import the HS-instruction class
+import object.com.OBJ_HSInstruction;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,16 +11,15 @@ public class UI {
     GamePanel gp;
     Font arial_40, arial_80B;
     BufferedImage keyImage;
-    BufferedImage hsInstructionImage; // Image for HS-instruction
+    BufferedImage hsInstructionImage;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
 
-    // Variables for HS-instruction animation
     private long startTime;
-    private boolean showInstruction = true; // Show immediately
-    private int instructionY = -500; // Start off-screen
+    private boolean showInstruction = true;
+    private int instructionY = -500;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -28,24 +27,19 @@ public class UI {
         arial_40 = new Font("Lucida Console", Font.BOLD, 40);
         arial_80B = new Font("Lucida Console", Font.BOLD, 55);
 
-        // Load key image
         OBJ_Key key = new OBJ_Key(gp);
         keyImage = key.image;
 
-        // Load HS-instruction image
         OBJ_HSInstruction hsInstruction = new OBJ_HSInstruction(gp);
         hsInstructionImage = hsInstruction.image;
 
-        // Scale down the HS-instruction image slightly
-        int scaledWidth = (int) (hsInstructionImage.getWidth() * 0.35); // Reduce size by 20%
-        int scaledHeight = (int) (hsInstructionImage.getHeight() * 0.35); // Reduce size by 20%
+        int scaledWidth = (int) (hsInstructionImage.getWidth() * 0.33);
+        int scaledHeight = (int) (hsInstructionImage.getHeight() * 0.33);
         hsInstructionImage = scaleImage(hsInstructionImage, scaledWidth, scaledHeight);
 
-        // Record the start time
         startTime = System.currentTimeMillis();
     }
 
-    // Helper method to scale an image
     private BufferedImage scaleImage(BufferedImage original, int width, int height) {
         BufferedImage scaledImage = new BufferedImage(width, height, original.getType());
         Graphics2D g2 = scaledImage.createGraphics();
@@ -106,15 +100,14 @@ public class UI {
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - startTime;
 
-            // Show image immediately
-            if (elapsedTime < 10000) { // Show image for 10 seconds
+            if (elapsedTime < 10000) {
                 showInstruction = true;
                 if (instructionY < gp.screenHeight / 2 - hsInstructionImage.getHeight() / 2) {
-                    instructionY += 5; // Slide down to the middle
+                    instructionY += 5;
                 }
             } else if (elapsedTime >= 10000) {
                 if (instructionY > -hsInstructionImage.getHeight()) {
-                    instructionY -= 5; // Slide up to disappear
+                    instructionY -= 5;
                 } else {
                     showInstruction = false;
                 }

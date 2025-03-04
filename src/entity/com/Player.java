@@ -19,7 +19,6 @@ public class Player extends Entity {
     boolean moving = false;
     int pixelCounter = 0;
 
-    // Hardware and Software phases
     private boolean hardwarePhase = true;
     private boolean softwarePhase = false;
     private long startTime;
@@ -51,7 +50,6 @@ public class Player extends Entity {
         setDefaultValues();
         getPlayerImage();
 
-        // Record the start time
         startTime = System.currentTimeMillis();
     }
 
@@ -86,11 +84,10 @@ public class Player extends Entity {
     }
 
     public void update() {
-        // Check if 5 seconds have passed to show "Hardware" text
         long currentTime = System.currentTimeMillis();
         if (currentTime - startTime > 10000 && !hardwareTextShown) {
             gp.ui.showMessage("Category: Hardware");
-            gp.playSE(5); // Play hardware-voice sound
+            gp.playSE(5);
             hardwareTextShown = true;
         }
 
@@ -164,7 +161,6 @@ public class Player extends Entity {
         if (i != 999) {
             String objectName = gp.obj[i].name;
 
-            // Keys can be collected anytime
             if (objectName.equals("Key")) {
                 gp.playSE(1);
                 hasKey++;
@@ -173,7 +169,6 @@ public class Player extends Entity {
                 return;
             }
 
-            // Doors can be unlocked anytime as long as the player has keys
             if (objectName.equals("Lock")) {
                 if (hasKey > 0) {
                     gp.playSE(3);
@@ -186,7 +181,6 @@ public class Player extends Entity {
                 return;
             }
 
-            // Chess can only be collected after all items are collected
             if (objectName.equals("Chess")) {
                 if (hardwareItemsCollected == hardwareItems.length && softwareItemsCollected == softwareItems.length) {
                     gp.ui.gameFinished = true;
@@ -198,19 +192,17 @@ public class Player extends Entity {
                 return;
             }
 
-            // Handle hardware and software items
             if (hardwarePhase) {
                 for (String item : hardwareItems) {
                     if (objectName.equals(item)) {
                         gp.playSE(3);
                         gp.obj[i] = null;
                         hardwareItemsCollected++;
-                        gp.ui.showMessage(item + "is a hardware!");
+                        gp.ui.showMessage(item + " is a hardware!");
                         checkHardwareCompletion();
                         return;
                     }
                 }
-                // If it's not a hardware item, play error sound
                 gp.playSE(7);
                 gp.ui.showMessage("Hint: Hardware can be touched!");
             } else if (softwarePhase) {
@@ -219,12 +211,11 @@ public class Player extends Entity {
                         gp.playSE(3);
                         gp.obj[i] = null;
                         softwareItemsCollected++;
-                        gp.ui.showMessage(item + "is a software!");
+                        gp.ui.showMessage(item + " is a software!");
                         checkSoftwareCompletion();
                         return;
                     }
                 }
-                // If it's not a software item, play error sound
                 gp.playSE(7);
                 gp.ui.showMessage("Hint: Software is the program that runs this game!");
             }
