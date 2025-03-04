@@ -36,8 +36,7 @@ public class Player extends Entity {
     private String[] softwareItems = {"Chrome", "Windows", "Facebook", "Picsart"};
     private int softwareItemsCollected = 0;
 
-    // Collected items and their definitions
-    public List<Map<String, String>> collectedItems = new ArrayList<>();
+    public List<Map<String, Object>> collectedItems = new ArrayList<>();
 
     public boolean hasKnowledgeCard = false;
     private float zoomScale = 1.0f;
@@ -105,6 +104,14 @@ public class Player extends Entity {
 
         if (hasKnowledgeCard && zoomScale < maxZoomScale) {
             zoomScale += zoomSpeed;
+        }
+
+        for (int i = collectedItems.size() - 1; i >= 0; i--) {
+            Map<String, Object> item = collectedItems.get(i);
+            long collectedTime = (long) item.get("collectedTime");
+            if (currentTime - collectedTime > 5000) {
+                collectedItems.remove(i);
+            }
         }
 
         if (moving == false) {
@@ -218,10 +225,10 @@ public class Player extends Entity {
                         gp.ui.showMessage(item + " is a hardware!");
                         checkHardwareCompletion();
 
-                        // Add the collected item and its definition
-                        Map<String, String> collectedItem = new HashMap<>();
+                        Map<String, Object> collectedItem = new HashMap<>();
                         collectedItem.put("name", item);
                         collectedItem.put("definition", getHardwareDefinition(item));
+                        collectedItem.put("collectedTime", System.currentTimeMillis());
                         collectedItems.add(collectedItem);
 
                         return;
@@ -238,10 +245,10 @@ public class Player extends Entity {
                         gp.ui.showMessage(item + " is a software!");
                         checkSoftwareCompletion();
 
-                        // Add the collected item and its definition
-                        Map<String, String> collectedItem = new HashMap<>();
+                        Map<String, Object> collectedItem = new HashMap<>();
                         collectedItem.put("name", item);
                         collectedItem.put("definition", getSoftwareDefinition(item));
+                        collectedItem.put("collectedTime", System.currentTimeMillis());
                         collectedItems.add(collectedItem);
 
                         return;

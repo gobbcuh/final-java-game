@@ -92,22 +92,20 @@ public class UI {
     }
 
     public void drawCollectedItems(Graphics2D g2) {
-        int startX = 20; // X position for the first item
-        int startY = gp.screenHeight - 100; // Y position for the first item
-        int itemSpacing = 80; // Space between items
+        int startX = 20;
+        int startY = gp.screenHeight - 100;
+        int itemSpacing = 80;
 
         for (int i = 0; i < gp.player.collectedItems.size(); i++) {
-            Map<String, String> item = gp.player.collectedItems.get(i);
-            String name = item.get("name");
-            String definition = item.get("definition");
+            Map<String, Object> item = gp.player.collectedItems.get(i);
+            String name = (String) item.get("name");
+            String definition = (String) item.get("definition");
 
-            // Draw the item image
             BufferedImage itemImage = getItemImage(name);
             if (itemImage != null) {
                 g2.drawImage(itemImage, startX, startY + (i * itemSpacing), 50, 50, null);
             }
 
-            // Draw the item definition
             g2.setFont(new Font("Arial", Font.PLAIN, 14));
             g2.setColor(Color.WHITE);
             g2.drawString(definition, startX + 60, startY + 30 + (i * itemSpacing));
@@ -115,7 +113,6 @@ public class UI {
     }
 
     private BufferedImage getItemImage(String itemName) {
-        // Use the image from the corresponding object class
         switch (itemName) {
             case "Computer":
                 return new OBJ_Computer(gp).image;
@@ -152,23 +149,23 @@ public class UI {
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth / 2 - textLength / 2;
             y = gp.screenHeight / 2 - (gp.tileSize * 3);
-            drawOutlinedText(g2, text, x, y, Color.RED, Color.black);
+            drawOutlinedText(g2, text, x, y, Color.green, Color.black);
 
             g2.setFont(arial_80B);
             text = "Congratulations!";
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth / 2 - textLength / 2;
-            y = gp.screenHeight / 2 + (gp.tileSize * 3); // Adjusted to move the text further down
-            drawOutlinedText(g2, text, x, y, Color.RED, Color.black);
+            y = gp.screenHeight / 2 + (gp.tileSize * 3);
+            drawOutlinedText(g2, text, x, y, Color.RED, Color.white);
 
             gp.gameThread = null;
         } else {
             // MESSAGE
             if (messageOn) {
-                g2.setFont(arial_40.deriveFont(25F)); // Smaller font size
+                g2.setFont(arial_40.deriveFont(25F));
                 int textLength = (int) g2.getFontMetrics().getStringBounds(message, g2).getWidth();
-                int x = gp.screenWidth / 2 - textLength / 2; // Center horizontally
-                int y = gp.tileSize * 3; // Position below the key count
+                int x = gp.screenWidth / 2 - textLength / 2;
+                int y = gp.tileSize * 3;
                 drawOutlinedText(g2, message, x, y, Color.white, Color.black);
 
                 messageCounter++;
