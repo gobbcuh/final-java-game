@@ -75,7 +75,6 @@ public class UI {
             int testWidth = metrics.stringWidth(testLine);
 
             if (testWidth > width - 2 * margin) {
-                // Draw the current line
                 g2.setColor(textColor);
                 g2.drawString(currentLine.toString(), x + margin, currentY);
                 currentY += lineHeight;
@@ -103,10 +102,18 @@ public class UI {
 
             BufferedImage itemImage = getItemImage(name);
             if (itemImage != null) {
-                g2.drawImage(itemImage, startX, startY + (i * itemSpacing), 50, 50, null);
+                g2.drawImage(itemImage, startX, startY + (i * itemSpacing), 38, 38, null);
             }
 
-            g2.setFont(new Font("Arial", Font.PLAIN, 14));
+            Font definitionFont = new Font("Arial", Font.PLAIN, 16);
+            g2.setFont(definitionFont);
+
+            g2.setColor(Color.BLACK);
+            g2.drawString(definition, startX + 60 - 1, startY + 30 + (i * itemSpacing) - 1);
+            g2.drawString(definition, startX + 60 + 1, startY + 30 + (i * itemSpacing) - 1);
+            g2.drawString(definition, startX + 60 - 1, startY + 30 + (i * itemSpacing) + 1);
+            g2.drawString(definition, startX + 60 + 1, startY + 30 + (i * itemSpacing) + 1);
+
             g2.setColor(Color.WHITE);
             g2.drawString(definition, startX + 60, startY + 30 + (i * itemSpacing));
         }
@@ -148,14 +155,14 @@ public class UI {
             text = "You found the knowledge!";
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth / 2 - textLength / 2;
-            y = gp.screenHeight / 2 - (gp.tileSize * 3);
-            drawOutlinedText(g2, text, x, y, Color.green, Color.black);
+            y = gp.screenHeight / 2 - (gp.tileSize * 4);
+            drawOutlinedText(g2, text, x, y, Color.red, Color.white);
 
             g2.setFont(arial_80B);
             text = "Congratulations!";
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth / 2 - textLength / 2;
-            y = gp.screenHeight / 2 + (gp.tileSize * 3);
+            y = gp.screenHeight / 2 + (gp.tileSize * 4);
             drawOutlinedText(g2, text, x, y, Color.RED, Color.white);
 
             gp.gameThread = null;
