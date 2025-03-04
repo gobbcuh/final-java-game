@@ -90,6 +90,7 @@ public class Player extends Entity {
         long currentTime = System.currentTimeMillis();
         if (currentTime - startTime > 10000 && !hardwareTextShown) {
             gp.ui.showMessage("Category: Hardware");
+            gp.playSE(5); // Play hardware-voice sound
             hardwareTextShown = true;
         }
 
@@ -178,7 +179,7 @@ public class Player extends Entity {
                     gp.playSE(3);
                     gp.obj[i] = null;
                     hasKey--;
-                    gp.ui.showMessage("You opened the door!");
+                    gp.ui.showMessage("Unlocked!");
                 } else {
                     gp.ui.showMessage("You need a key!");
                 }
@@ -204,28 +205,28 @@ public class Player extends Entity {
                         gp.playSE(3);
                         gp.obj[i] = null;
                         hardwareItemsCollected++;
-                        gp.ui.showMessage("You got the " + item + "!");
+                        gp.ui.showMessage(item + "is a hardware!");
                         checkHardwareCompletion();
                         return;
                     }
                 }
                 // If it's not a hardware item, play error sound
-                gp.playSE(5); // Assuming 5 is the index for error sound
-                gp.ui.showMessage("This is not a hardware item!");
+                gp.playSE(7);
+                gp.ui.showMessage("Hint: Hardware can be touched!");
             } else if (softwarePhase) {
                 for (String item : softwareItems) {
                     if (objectName.equals(item)) {
                         gp.playSE(3);
                         gp.obj[i] = null;
                         softwareItemsCollected++;
-                        gp.ui.showMessage("You got the " + item + "!");
+                        gp.ui.showMessage(item + "is a software!");
                         checkSoftwareCompletion();
                         return;
                     }
                 }
                 // If it's not a software item, play error sound
-                gp.playSE(5); // Assuming 5 is the index for error sound
-                gp.ui.showMessage("This is not a software item!");
+                gp.playSE(7);
+                gp.ui.showMessage("Hint: Software is the program that runs this game!");
             }
         }
     }
@@ -235,6 +236,7 @@ public class Player extends Entity {
             hardwarePhase = false;
             softwarePhase = true;
             gp.ui.showMessage("Category: Software");
+            gp.playSE(6);
         }
     }
 

@@ -25,8 +25,8 @@ public class UI {
     public UI(GamePanel gp) {
         this.gp = gp;
 
-        arial_40 = new Font("Lucida Console", Font.PLAIN, 40);
-        arial_80B = new Font("Lucida Console", Font.BOLD, 80);
+        arial_40 = new Font("Lucida Console", Font.BOLD, 40);
+        arial_80B = new Font("Lucida Console", Font.BOLD, 55);
 
         // Load key image
         OBJ_Key key = new OBJ_Key(gp);
@@ -62,7 +62,7 @@ public class UI {
     public void draw(Graphics2D g2) {
         if (gameFinished) {
             g2.setFont(arial_40);
-            g2.setColor(Color.white);
+            g2.setColor(Color.yellow);
 
             String text;
             int textLength;
