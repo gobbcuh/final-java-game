@@ -24,12 +24,37 @@ public class TileManager {
         loadMap("/maps/world01.txt");
     }
     public void getTileImage() {
-        setup(0, "grass", false);
-        setup(1, "wall", true);
-        setup(2, "water", true);
-        setup(3, "earth", false);
-        setup(4, "tree", true);
-        setup(5, "sand", false);
+        setup(0, "grass00", false);
+        setup(1, "grass00", false);
+        setup(2, "grass00", false);
+        setup(3, "grass00", false);
+        setup(4, "grass00", false);
+        setup(5, "grass00", false);
+        setup(6, "grass00", false);
+        setup(7, "grass00", false);
+        setup(8, "grass00", false);
+        setup(9, "grass00", false);
+
+        setup(10, "grass", false);
+        setup(11, "grass", false);
+        setup(12, "grass", false);
+        setup(13, "grass", false);
+        setup(14, "grass", false);
+        setup(15, "grass", false);
+
+        setup(16, "earth", false);
+        setup(17, "earth", false);
+        setup(18, "earth", false);
+        setup(19, "earth", false);
+        setup(20, "earth", false);
+        setup(21, "earth", false);
+
+        setup(22, "castle", true);
+        setup(23, "castle", true);
+        setup(24, "castle", true);
+        setup(25, "castle", true);
+        setup(26, "castle", true);
+        setup(27, "castle", true);
     }
     public void setup(int index, String imageName, boolean collision) {
         UtilityTool uTool = new UtilityTool();
