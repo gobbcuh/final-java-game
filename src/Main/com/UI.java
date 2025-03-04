@@ -1,9 +1,10 @@
 package Main.com;
 
-import object.com.OBJ_HSInstruction;
+import object.com.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 public class UI {
     GamePanel gp;
@@ -58,15 +59,16 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
-    private void drawWrappedText(Graphics2D g2, String text, int x, int y, int width, int margin, Font font, Color textColor, Color outlineColor) {
+    private void drawWrappedText(Graphics2D g2, String text, int x, int y, int width, int margin, Font font, Color textColor) {
         g2.setFont(font);
         FontMetrics metrics = g2.getFontMetrics();
         int lineHeight = metrics.getHeight();
 
-        // Split the text into lines that fit within the specified width
+        int topMargin = (int) (0.55 * Toolkit.getDefaultToolkit().getScreenResolution());
+
         String[] words = text.split(" ");
         StringBuilder currentLine = new StringBuilder();
-        int currentY = y + margin;
+        int currentY = y + topMargin;
 
         for (String word : words) {
             String testLine = currentLine + word + " ";
@@ -74,7 +76,8 @@ public class UI {
 
             if (testWidth > width - 2 * margin) {
                 // Draw the current line
-                drawOutlinedText(g2, currentLine.toString(), x + margin, currentY, textColor, outlineColor);
+                g2.setColor(textColor);
+                g2.drawString(currentLine.toString(), x + margin, currentY);
                 currentY += lineHeight;
                 currentLine = new StringBuilder(word + " ");
             } else {
@@ -82,9 +85,58 @@ public class UI {
             }
         }
 
-        // Draw the last line
         if (!currentLine.isEmpty()) {
-            drawOutlinedText(g2, currentLine.toString(), x + margin, currentY, textColor, outlineColor);
+            g2.setColor(textColor);
+            g2.drawString(currentLine.toString(), x + margin, currentY);
+        }
+    }
+
+    public void drawCollectedItems(Graphics2D g2) {
+        int startX = 20; // X position for the first item
+        int startY = gp.screenHeight - 100; // Y position for the first item
+        int itemSpacing = 80; // Space between items
+
+        for (int i = 0; i < gp.player.collectedItems.size(); i++) {
+            Map<String, String> item = gp.player.collectedItems.get(i);
+            String name = item.get("name");
+            String definition = item.get("definition");
+
+            // Draw the item image
+            BufferedImage itemImage = getItemImage(name);
+            if (itemImage != null) {
+                g2.drawImage(itemImage, startX, startY + (i * itemSpacing), 50, 50, null);
+            }
+
+            // Draw the item definition
+            g2.setFont(new Font("Arial", Font.PLAIN, 14));
+            g2.setColor(Color.WHITE);
+            g2.drawString(definition, startX + 60, startY + 30 + (i * itemSpacing));
+        }
+    }
+
+    private BufferedImage getItemImage(String itemName) {
+        // Use the image from the corresponding object class
+        switch (itemName) {
+            case "Computer":
+                return new OBJ_Computer(gp).image;
+            case "System Unit":
+                return new OBJ_SystemUnit(gp).image;
+            case "Mouse":
+                return new OBJ_Mouse(gp).image;
+            case "Speaker":
+                return new OBJ_Speaker(gp).image;
+            case "Printer":
+                return new OBJ_Printer(gp).image;
+            case "Chrome":
+                return new OBJ_Chrome(gp).image;
+            case "Windows":
+                return new OBJ_Windows(gp).image;
+            case "Facebook":
+                return new OBJ_Facebook(gp).image;
+            case "Picsart":
+                return new OBJ_Picsart(gp).image;
+            default:
+                return null;
         }
     }
 
@@ -100,14 +152,14 @@ public class UI {
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth / 2 - textLength / 2;
             y = gp.screenHeight / 2 - (gp.tileSize * 3);
-            drawOutlinedText(g2, text, x, y, Color.yellow, Color.black);
+            drawOutlinedText(g2, text, x, y, Color.RED, Color.black);
 
             g2.setFont(arial_80B);
             text = "Congratulations!";
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth / 2 - textLength / 2;
-            y = gp.screenHeight / 2 + (gp.tileSize * 2);
-            drawOutlinedText(g2, text, x, y, Color.yellow, Color.black);
+            y = gp.screenHeight / 2 + (gp.tileSize * 3); // Adjusted to move the text further down
+            drawOutlinedText(g2, text, x, y, Color.RED, Color.black);
 
             gp.gameThread = null;
         } else {
@@ -149,10 +201,12 @@ public class UI {
                 g2.drawImage(hsInstructionImage, x, y, null);
 
                 String instructionText = "Consider the given category—Hardware or Software—and collect only the correct items based on it. Along the way, find and collect a key to unlock the knowledge card. Remember, you won’t be able to open the lock unless you’ve collected all the hardware and software items!";
-                Font instructionFont = arial_40.deriveFont(14F);
-                int margin = (int) (0.5 * Toolkit.getDefaultToolkit().getScreenResolution());
-                drawWrappedText(g2, instructionText, x, y, hsInstructionImage.getWidth(), margin, instructionFont, Color.white, Color.black);
+                Font instructionFont = arial_40.deriveFont(15F);
+                int margin = (int) (0.3 * Toolkit.getDefaultToolkit().getScreenResolution());
+                drawWrappedText(g2, instructionText, x, y, hsInstructionImage.getWidth(), margin, instructionFont, Color.black);
             }
+
+            drawCollectedItems(g2);
         }
     }
 }

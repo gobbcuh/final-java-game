@@ -10,17 +10,17 @@ public class AssetSetter {
 
     public void setObject() {
 
-        gp.obj[0] = new OBJ_Door(gp);
-        gp.obj[0].worldX = 12 * gp.tileSize;
-        gp.obj[0].worldY = 22 * gp.tileSize;
+        gp.obj[0] = new OBJ_Chess(gp);
+        gp.obj[0].worldX = 33 * gp.tileSize;
+        gp.obj[0].worldY = 9 * gp.tileSize;
 
-        gp.obj[1] = new OBJ_Key(gp);
-        gp.obj[1].worldX = 23 * gp.tileSize;
-        gp.obj[1].worldY = 7 * gp.tileSize;
+        gp.obj[1] = new OBJ_Door(gp);
+        gp.obj[1].worldX = 33 * gp.tileSize;
+        gp.obj[1].worldY = 9 * gp.tileSize;
 
-        gp.obj[2] = new OBJ_Chess(gp);
-        gp.obj[2].worldX = 12 * gp.tileSize;
-        gp.obj[2].worldY = 22 * gp.tileSize;
+        gp.obj[2] = new OBJ_Key(gp);
+        gp.obj[2].worldX = 23 * gp.tileSize;
+        gp.obj[2].worldY = 37 * gp.tileSize;
 
         gp.obj[3] = new OBJ_Computer(gp);
         gp.obj[3].worldX = 43 * gp.tileSize;
@@ -51,7 +51,7 @@ public class AssetSetter {
         gp.obj[9].worldY = 31 * gp.tileSize;
 
         gp.obj[10] = new OBJ_Facebook(gp);
-        gp.obj[10].worldX = 25 * gp.tileSize;
+        gp.obj[10].worldX = 24 * gp.tileSize;
         gp.obj[10].worldY = 4 * gp.tileSize;
 
         gp.obj[11] = new OBJ_Picsart(gp);
