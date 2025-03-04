@@ -161,14 +161,6 @@ public class Player extends Entity {
         if (i != 999) {
             String objectName = gp.obj[i].name;
 
-            if (objectName.equals("Key")) {
-                gp.playSE(1);
-                hasKey++;
-                gp.obj[i] = null;
-                gp.ui.showMessage("You got a key!");
-                return;
-            }
-
             if (objectName.equals("Lock")) {
                 if (hasKey > 0) {
                     gp.playSE(3);
@@ -178,6 +170,14 @@ public class Player extends Entity {
                 } else {
                     gp.ui.showMessage("You need a key!");
                 }
+                return;
+            }
+
+            if (objectName.equals("Key")) {
+                gp.playSE(1);
+                hasKey++;
+                gp.obj[i] = null;
+                gp.ui.showMessage("You got a key!");
                 return;
             }
 
