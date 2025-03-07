@@ -1,5 +1,7 @@
 package Main.com; // draft 741
 
+import main2.GamePanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -336,6 +338,7 @@ public class GameIntroScreen extends JPanel {
         frame.setSize(384, 265);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
     }
 }
 
@@ -543,6 +546,9 @@ class GameMainScreen extends JPanel {
                 }
             }
         });
+
+
+
     }
 
     private void playSoundEffect(String filePath) {

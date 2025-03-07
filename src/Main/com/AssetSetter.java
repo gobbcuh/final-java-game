@@ -43,11 +43,11 @@ public class AssetSetter {
         gp.obj[7].worldY = 44 * gp.tileSize;
 
         gp.obj[8] = new OBJ_Chrome(gp);
-        gp.obj[8].worldX = 44 * gp.tileSize;
-        gp.obj[8].worldY = 23 * gp.tileSize;
+        gp.obj[8].worldX = 42 * gp.tileSize;
+        gp.obj[8].worldY = 22 * gp.tileSize;
 
         gp.obj[9] = new OBJ_Windows(gp);
-        gp.obj[9].worldX = 27 * gp.tileSize;
+        gp.obj[9].worldX = 28 * gp.tileSize;
         gp.obj[9].worldY = 31 * gp.tileSize;
 
         gp.obj[10] = new OBJ_Facebook(gp);
