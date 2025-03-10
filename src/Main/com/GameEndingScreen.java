@@ -40,30 +40,25 @@ public class GameEndingScreen extends JPanel {
     private boolean showEndQuit2 = false;
 
     public GameEndingScreen(JFrame parentFrame) {
-        // Load the three ending background images
         endBackgrounds = new Image[3];
         for (int i = 0; i < 3; i++) {
             endBackgrounds[i] = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/end-bg" + (i + 1) + ".png").getImage();
         }
 
-        // Load the three "CONGRATULATIONS!" images
         congratsImages = new Image[3];
         for (int i = 0; i < 3; i++) {
             congratsImages[i] = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/congrats" + (i + 1) + ".png").getImage();
         }
 
-        // Load the three knowledge card images
         knowledgeCards = new Image[3];
         for (int i = 0; i < 3; i++) {
             knowledgeCards[i] = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/knowledge-card" + (i + 1) + ".png").getImage();
         }
 
-        // Load the end-quit1 and end-quit2 images
         endQuit1 = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/end-quit1.png").getImage();
         endQuit2 = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/end-quit2.png").getImage();
 
-        // Set up a timer to cycle through the background images
-        backgroundTimer = new Timer(200, new ActionListener() { // Change background every 200ms
+        backgroundTimer = new Timer(200, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentBackgroundIndex = (currentBackgroundIndex + 1) % 3;
@@ -72,8 +67,7 @@ public class GameEndingScreen extends JPanel {
         });
         backgroundTimer.start();
 
-        // Set up a timer to cycle through the "CONGRATULATIONS!" images
-        congratsTimer = new Timer(500, new ActionListener() { // Change "CONGRATULATIONS!" image every 500ms
+        congratsTimer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentCongratsIndex = (currentCongratsIndex + 1) % 3;
@@ -82,15 +76,13 @@ public class GameEndingScreen extends JPanel {
         });
         congratsTimer.start();
 
-        // Set up a timer to display the knowledge cards sequentially
-        knowledgeCardTimer = new Timer(2000, new ActionListener() { // Display each knowledge card every 2 seconds
+        knowledgeCardTimer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (currentKnowledgeCardIndex < 2) {
                     currentKnowledgeCardIndex++;
                     repaint();
 
-                    // Start the queen's animation when the first knowledge card is displayed
                     if (currentKnowledgeCardIndex == 0) {
                         initializeQueen();
                     }
@@ -101,13 +93,11 @@ public class GameEndingScreen extends JPanel {
                 }
             }
         });
-        knowledgeCardTimer.setInitialDelay(6000); // Start displaying knowledge cards after 6 seconds
+        knowledgeCardTimer.setInitialDelay(6000);
         knowledgeCardTimer.start();
 
-        // Play the background music
         playBackgroundMusic();
 
-        // Add mouse listener for end-quit1
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -139,18 +129,17 @@ public class GameEndingScreen extends JPanel {
 
     private void initializeQueen() {
         queenBinaryImage = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/queen-binary.png").getImage();
-        queenWidth = (int) (queenBinaryImage.getWidth(null) * queenScale); // Scale the width
-        queenHeight = (int) (queenBinaryImage.getHeight(null) * queenScale); // Scale the height
+        queenWidth = (int) (queenBinaryImage.getWidth(null) * queenScale);
+        queenHeight = (int) (queenBinaryImage.getHeight(null) * queenScale);
 
-        // Timer for the queen's slide animation
+        // Timer for the queen's animation
         queenAnimationTimer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (queenX < queenTargetX) {
-                    queenX += 5; // Move the queen to the right
+                    queenX += 5;
                 }
 
-                // Sparkle fade animation
                 if (sparkleFadeOut) {
                     sparkleAlpha -= 10;
                     if (sparkleAlpha <= 200) sparkleFadeOut = false;
@@ -161,8 +150,8 @@ public class GameEndingScreen extends JPanel {
                 repaint();
             }
         });
-        queenX = queenStartX; // Start the queen off-screen to the left
-        queenY = (getHeight() - queenHeight) / 2 + 20; // Center vertically
+        queenX = queenStartX;
+        queenY = (getHeight() - queenHeight) / 2 + 20;
         queenAnimationTimer.start();
     }
 
@@ -186,7 +175,6 @@ public class GameEndingScreen extends JPanel {
         // Draw the current background image
         g.drawImage(endBackgrounds[currentBackgroundIndex], 0, 0, getWidth(), getHeight(), this);
 
-        // Draw the "CONGRATULATIONS!" images based on the current index
         if (currentCongratsIndex >= 0) {
             drawCongratsImage(g, 0);
         }
@@ -197,7 +185,7 @@ public class GameEndingScreen extends JPanel {
             drawCongratsImage(g, 2);
         }
 
-        // Draw the knowledge cards based on the current index
+        // Draw the knowledge cards
         if (currentKnowledgeCardIndex >= 0) {
             drawKnowledgeCard(g, 0);
         }
@@ -208,12 +196,10 @@ public class GameEndingScreen extends JPanel {
             drawKnowledgeCard(g, 2);
         }
 
-        // Draw the queen and sparkles if the queen animation has started
         if (queenAnimationTimer != null && queenAnimationTimer.isRunning()) {
             drawQueenAndSparkles(g);
         }
 
-        // Draw end-quit1 if it should be shown
         if (showEndQuit1) {
             int quit1Width = endQuit1.getWidth(null);
             int quit1Height = endQuit1.getHeight(null);
@@ -222,7 +208,6 @@ public class GameEndingScreen extends JPanel {
             g.drawImage(endQuit1, quit1X, quit1Y, quit1Width, quit1Height, this);
         }
 
-        // Draw end-quit2 if it should be shown
         if (showEndQuit2) {
             int quit2Width = endQuit2.getWidth(null);
             int quit2Height = endQuit2.getHeight(null);
@@ -257,7 +242,6 @@ public class GameEndingScreen extends JPanel {
         // Draw the queen's image
         g.drawImage(queenBinaryImage, queenX, queenY, queenWidth, queenHeight, this);
 
-        // Draw sparkles around the queen
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < 20; i++) {
             int sparkleX, sparkleY;
