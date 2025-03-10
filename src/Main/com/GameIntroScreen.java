@@ -502,11 +502,10 @@ class GameMainScreen extends JPanel {
             }
         });
 
-        // Timer for moving the queen to the left
         queenMoveTimer = new Timer(17, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (queenX > 265) { // Move the queen to the left until she reaches x = 150
+                if (queenX > 265) {
                     queenX -= 7;
                     repaint();
                 } else {
@@ -515,20 +514,17 @@ class GameMainScreen extends JPanel {
             }
         });
 
-        // Timer for moving the intro text box to the right
         introTextBoxMoveTimer = new Timer(16, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Stop the intro text box before it reaches the right edge (leave some space)
-                if (introTextBoxX < getWidth() - introTextBoxWidth - 320) { // Adjusted to stop 200 pixels before the right edge
-                    introTextBoxX += 5; // Move the text box to the right
+                if (introTextBoxX < getWidth() - introTextBoxWidth - 320) {
+                    introTextBoxX += 5;
                     repaint();
                 } else {
                     ((Timer) e.getSource()).stop();
-                    introTextBoxStopped = true; // Set the flag to true when the text box stops moving
-                    repaint(); // Trigger repaint to draw the text
+                    introTextBoxStopped = true;
+                    repaint();
 
-                    // Start the word-by-word display timer
                     wordDisplayTimer.start();
                 }
             }
@@ -567,14 +563,12 @@ class GameMainScreen extends JPanel {
         super.paintComponent(g);
         g.drawImage(backgrounds[currentBackgroundIndex], 0, 0, getWidth(), getHeight(), this);
 
-        // Draw the intro text box first (behind the queen and sparkles)
         if (introTextBoxVisible && introTextBoxImage != null) {
             introTextBoxWidth = introTextBoxImage.getWidth(this);
             introTextBoxHeight = introTextBoxImage.getHeight(this);
-            introTextBoxY = (getHeight() - introTextBoxHeight) / 2; // Center vertically
+            introTextBoxY = (getHeight() - introTextBoxHeight) / 2;
             g.drawImage(introTextBoxImage, introTextBoxX, introTextBoxY, introTextBoxWidth, introTextBoxHeight, this);
 
-            // Draw the sub-text-box on top of the intro text box
             if (subTextBoxImage != null) {
                 int subTextBoxWidth = subTextBoxImage.getWidth(this);
                 int subTextBoxHeight = subTextBoxImage.getHeight(this);
