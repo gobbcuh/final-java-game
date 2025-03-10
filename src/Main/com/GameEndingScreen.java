@@ -23,16 +23,16 @@ public class GameEndingScreen extends JPanel {
     private Clip backgroundMusic;
 
     private Image queenBinaryImage;
-    private Timer queenAnimationTimer; // Timer for the queen's animation
-    private int sparkleAlpha = 255; // Alpha value for sparkles
-    private boolean sparkleFadeOut = true; // Sparkle fade direction
-    private int queenX; // X position of the queen
-    private int queenY; // Y position of the queen
-    private int queenTargetX = 195; // Final X position of the queen
-    private int queenStartX = -300; // Start X position (off-screen to the left)
-    private int queenWidth; // Width of the queen's image
-    private int queenHeight; // Height of the queen's image
-    private float queenScale = 3.5f; // Scale factor to make the queen larger
+    private Timer queenAnimationTimer;
+    private int sparkleAlpha = 255;
+    private boolean sparkleFadeOut = true;
+    private int queenX;
+    private int queenY;
+    private int queenTargetX = 195;
+    private int queenStartX = -300;
+    private int queenWidth;
+    private int queenHeight;
+    private float queenScale = 3.5f;
 
     private Image endQuit1;
     private Image endQuit2;
