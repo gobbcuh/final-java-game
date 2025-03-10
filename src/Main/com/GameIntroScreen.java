@@ -572,34 +572,29 @@ class GameMainScreen extends JPanel {
             if (subTextBoxImage != null) {
                 int subTextBoxWidth = subTextBoxImage.getWidth(this);
                 int subTextBoxHeight = subTextBoxImage.getHeight(this);
-                int subTextBoxX = introTextBoxX + (introTextBoxWidth - subTextBoxWidth) / 2; // Center horizontally
-                int subTextBoxY = introTextBoxY - subTextBoxHeight / 2; // Position at the center top of the intro text box
+                int subTextBoxX = introTextBoxX + (introTextBoxWidth - subTextBoxWidth) / 2;
+                int subTextBoxY = introTextBoxY - subTextBoxHeight / 2;
                 g.drawImage(subTextBoxImage, subTextBoxX, subTextBoxY, subTextBoxWidth, subTextBoxHeight, this);
             }
 
-            // Draw the text within the intro text box after it has stopped moving
             if (introTextBoxStopped && queenMoveTimer.isRunning() == false) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setFont(new Font("Century Gothic", Font.BOLD, 14));
                 FontMetrics fm = g2d.getFontMetrics();
 
-                // Calculate the margins
-                int marginX = (int) (0.7 * 72); // 0.5 inch margin in pixels (72 pixels per inch)
-                int marginY = (int) (0.3 * 72); // 0.3 inch margin in pixels
+                int marginX = (int) (0.7 * 72);
+                int marginY = (int) (0.3 * 72);
 
-                // Calculate the text area
                 int textAreaX = introTextBoxX + marginX;
-                int textAreaY = introTextBoxY + marginY + 30; // Adjusted downward by 20 pixels
+                int textAreaY = introTextBoxY + marginY + 30;
                 int textAreaWidth = introTextBoxWidth - 2 * marginX;
                 int textAreaHeight = introTextBoxHeight - 2 * marginY;
 
-                // Build the text up to the current word
                 StringBuilder displayedText = new StringBuilder();
                 for (int i = 0; i < currentWordIndex; i++) {
                     displayedText.append(textWords[i]).append(" ");
                 }
 
-                // Split the text into lines that fit within the text area
                 String[] words = displayedText.toString().split(" ");
                 StringBuilder line = new StringBuilder();
                 int y = textAreaY + fm.getAscent();
@@ -636,7 +631,6 @@ class GameMainScreen extends JPanel {
 
         g.drawImage(queenBinaryImage, queenX, queenY, newQueenWidth, newQueenHeight, this);
 
-        // Draw the queen's name with karaoke-like animation
         if (queenNameVisible) {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setFont(new Font("Lucida Console", Font.BOLD, 24));
@@ -644,17 +638,13 @@ class GameMainScreen extends JPanel {
             int textWidth = fm.stringWidth(queenName);
             int textHeight = fm.getHeight();
 
-            // Calculate the position of the text above the queen's head
             int textX = queenX + (newQueenWidth - textWidth) / 2;
             int textY = queenY - textHeight;
 
-            // Draw the full text in a lighter color
             g2d.setColor(new Color(255, 255, 255, 100));
             g2d.drawString(queenName, textX, textY);
 
-            // Draw the animated part of the text
             if (queenNameDisappearIndex == queenName.length()) {
-                // Appearance animation: Draw the text in yellow
                 String animatedText = queenName.substring(0, queenNameIndex);
                 g2d.setColor(Color.BLACK);
                 for (int i = -1; i <= 1; i++) {
@@ -664,14 +654,12 @@ class GameMainScreen extends JPanel {
                         }
                     }
                 }
-                g2d.setColor(Color.YELLOW); // Yellow during appearance animation
+                g2d.setColor(Color.YELLOW);
                 g2d.drawString(animatedText, textX, textY);
             } else {
-                // Disappearance animation: Turn letters white one by one
                 String remainingText = queenName.substring(0, queenNameDisappearIndex);
                 String whiteText = queenName.substring(queenNameDisappearIndex);
 
-                // Draw the remaining text in yellow
                 g2d.setColor(Color.BLACK);
                 for (int i = -1; i <= 1; i++) {
                     for (int j = -1; j <= 1; j++) {
