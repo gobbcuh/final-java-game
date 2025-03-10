@@ -1,4 +1,4 @@
-package Main.com; // draft 741
+package Main.com; // draft 766
 
 import main2.GamePanel;
 
@@ -378,29 +378,26 @@ class GameMainScreen extends JPanel {
     private boolean queenNameVisible = false;
     private boolean queenNameAnimationComplete = false;
 
-    private String[] textWords; // Array to hold individual words of the text
-    private int currentWordIndex = 0; // Index of the current word being displayed
-    private Timer wordDisplayTimer; // Timer for word-by-word display
+    private String[] textWords;
+    private int currentWordIndex = 0;
+    private Timer wordDisplayTimer;
 
     public GameMainScreen(JFrame parentFrame) {
         this.parentFrame = parentFrame;
 
-        // Load the new background images
         this.backgrounds = new Image[3];
         this.backgrounds[0] = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/bg-first.png").getImage();
         this.backgrounds[1] = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/bg-first2.png").getImage();
         this.backgrounds[2] = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/bg-first3.png").getImage();
 
         queenBinaryImage = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/queen-binary.png").getImage();
-        introTextBoxImage = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/intro-text-box.png").getImage(); // Load the intro text box image
-        subTextBoxImage = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/sub-text-box.png").getImage(); // Load the sub-text box image
+        introTextBoxImage = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/intro-text-box.png").getImage();
+        subTextBoxImage = new ImageIcon("C:/Users/User/IdeaProjects/final/out/production/final/Main/sub-text-box.png").getImage();
 
-        // Initialize the text words array
         String text = "Brave Sophia, something bad happened! A sneaky bug named Glitch stole all the kingdom's knowledge and broke it into pieces! There are three special pieces of knowledge lost: Binary, Hardware and Software, and the Internet. You’re the hero we need! Explore these topics, solve the puzzles, and find the lost knowledge. Only you can stop Glitch and save our world!";
         textWords = text.split(" ");
 
-        // Timer for word-by-word display
-        wordDisplayTimer = new Timer(500, new ActionListener() { // Increased delay to 500ms
+        wordDisplayTimer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (currentWordIndex < textWords.length) {
@@ -412,7 +409,6 @@ class GameMainScreen extends JPanel {
             }
         });
 
-        // Set up the background timer to cycle through the new images
         backgroundTimer = new Timer(200, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -427,13 +423,12 @@ class GameMainScreen extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (queenScale < 1.0f) {
-                    queenScale += 0.02f; // Gradually increase the scale
+                    queenScale += 0.02f;
                 }
 
-                // Sparkle fade animation
                 if (sparkleFadeOut) {
                     sparkleAlpha -= 10;
-                    if (sparkleAlpha <= 200) sparkleFadeOut = false; // Adjusted minimum alpha to 100
+                    if (sparkleAlpha <= 200) sparkleFadeOut = false;
                 } else {
                     sparkleAlpha += 10;
                     if (sparkleAlpha >= 255) sparkleFadeOut = true;
@@ -443,36 +438,31 @@ class GameMainScreen extends JPanel {
         });
         queenAnimationTimer.start();
 
-        // Play the queen's entrance sound effect
         playSoundEffect("C:/Users/User/IdeaProjects/final/out/production/final/Main/queen-appear-sound.wav");
 
-        // Timer to delay the queen's movement (removed the 3-second delay)
-        Timer delayTimer = new Timer(0, new ActionListener() { // Changed from 3000 to 0
+        Timer delayTimer = new Timer(0, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 queenNameVisible = true;
-                queenNameTimer.start(); // Start the queen's name animation immediately
+                queenNameTimer.start();
             }
         });
         delayTimer.setRepeats(false);
         delayTimer.start();
 
-        // Timer for the queen's name appearance animation
         queenNameTimer = new Timer(150, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (queenNameIndex < queenName.length()) {
                     queenNameIndex++;
-                    // Play the sound effect when the first letter starts to animate
                     if (queenNameIndex == 1) {
-                        // Add a 2-second delay before playing the sound
                         Timer soundDelayTimer = new Timer(4000, new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                playQueenTextIntroSound(); // Play the sound after the delay
+                                playQueenTextIntroSound();
                             }
                         });
-                        soundDelayTimer.setRepeats(false); // Ensure the timer only runs once
+                        soundDelayTimer.setRepeats(false);
                         soundDelayTimer.start();
                     }
                     repaint();
@@ -481,7 +471,7 @@ class GameMainScreen extends JPanel {
                     Timer pauseTimer = new Timer(3000, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            queenNameDisappearTimer.start(); // Start the disappearance animation
+                            queenNameDisappearTimer.start();
                         }
                     });
                     pauseTimer.setRepeats(false);
@@ -490,7 +480,6 @@ class GameMainScreen extends JPanel {
             }
         });
 
-        // Timer for the queen's name disappearance animation
         queenNameDisappearTimer = new Timer(150, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
