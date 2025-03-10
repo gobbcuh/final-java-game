@@ -348,16 +348,16 @@ class GameMainScreen extends JPanel {
     private int currentBackgroundIndex = 0;
     private JFrame parentFrame;
     private Image queenBinaryImage;
-    private float queenScale = 0.1f; // Initial scale for the queen's image
-    private Timer queenAnimationTimer; // Timer for the queen's animation
-    private int sparkleAlpha = 255; // Alpha value for sparkles
-    private boolean sparkleFadeOut = true; // Sparkle fade direction
-    private int queenX; // X position of the queen
-    private int queenY; // Y position of the queen
-    private int newQueenWidth; // Width of the queen's image
-    private int newQueenHeight; // Height of the queen's image
-    private Timer queenMoveTimer; // Timer for moving the queen to the left
-    private boolean queenMoveStarted = false; // Flag to check if the queen has started moving
+    private float queenScale = 0.1f;
+    private Timer queenAnimationTimer;
+    private int sparkleAlpha = 255;
+    private boolean sparkleFadeOut = true;
+    private int queenX;
+    private int queenY;
+    private int newQueenWidth;
+    private int newQueenHeight;
+    private Timer queenMoveTimer;
+    private boolean queenMoveStarted = false;
 
     private Image introTextBoxImage; // New image for the intro text box
     private int introTextBoxX; // X position of the intro text box
