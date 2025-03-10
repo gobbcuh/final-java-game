@@ -11,16 +11,16 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameEndingScreen extends JPanel {
-    private Image[] endBackgrounds; // Array to hold the three background images
-    private Image[] congratsImages; // Array to hold the three "CONGRATULATIONS!" images
-    private Image[] knowledgeCards; // Array to hold the three knowledge card images
-    private int currentBackgroundIndex = 0; // Index of the current background image
-    private int currentCongratsIndex = 0; // Index of the current "CONGRATULATIONS!" image
-    private int currentKnowledgeCardIndex = -1; // Index of the current knowledge card image (-1 means none displayed yet)
-    private Timer backgroundTimer; // Timer to cycle through the background images
-    private Timer congratsTimer; // Timer to cycle through the "CONGRATULATIONS!" images
-    private Timer knowledgeCardTimer; // Timer to control the display of knowledge cards
-    private Clip backgroundMusic; // Clip for the background music
+    private Image[] endBackgrounds;
+    private Image[] congratsImages;
+    private Image[] knowledgeCards;
+    private int currentBackgroundIndex = 0;
+    private int currentCongratsIndex = 0;
+    private int currentKnowledgeCardIndex = -1;
+    private Timer backgroundTimer;
+    private Timer congratsTimer;
+    private Timer knowledgeCardTimer;
+    private Clip backgroundMusic;
 
     private Image queenBinaryImage;
     private Timer queenAnimationTimer; // Timer for the queen's animation
