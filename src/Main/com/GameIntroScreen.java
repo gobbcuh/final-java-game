@@ -615,7 +615,7 @@ class GameMainScreen extends JPanel {
             }
         }
 
-        // Draw the queen's image
+        // Drawing the queen's image
         int queenWidth = queenBinaryImage.getWidth(this);
         int queenHeight = queenBinaryImage.getHeight(this);
         int screenHeight = getHeight();
@@ -689,8 +689,8 @@ class GameMainScreen extends JPanel {
         for (int i = 0; i < 20; i++) {
             int sparkleX, sparkleY;
             do {
-                sparkleX = queenX + (int) (Math.random() * (newQueenWidth + 100)) - 50; // Wider scatter area
-                sparkleY = queenY + (int) (Math.random() * (newQueenHeight + 100)) - 50; // Wider scatter area
+                sparkleX = queenX + (int) (Math.random() * (newQueenWidth + 100)) - 50;
+                sparkleY = queenY + (int) (Math.random() * (newQueenHeight + 100)) - 50;
             } while (sparkleX >= queenX && sparkleX <= queenX + newQueenWidth && sparkleY >= queenY && sparkleY <= queenY + newQueenHeight);
 
             int sparkleSize = 5 + (int) (Math.random() * 5);
@@ -710,30 +710,26 @@ class GameMainScreen extends JPanel {
     }
 
     private void drawLine(Graphics2D g2d, String line, int x, int y, FontMetrics fm) {
-        // Split the line into words, including punctuation
         String[] words = line.split(" ");
         int currentX = x;
 
         for (String word : words) {
-            // Remove any non-letter characters (e.g., commas, periods) for comparison
             String cleanWord = word.replaceAll("[^a-zA-Z]", "");
 
-            // Check if the cleaned word matches any of the target words (case-insensitive)
             if (cleanWord.equalsIgnoreCase("Glitch")) {
-                g2d.setColor(new Color(165, 42, 42)); // Brown for "Glitch"
+                g2d.setColor(new Color(165, 42, 42));
             } else if (cleanWord.equalsIgnoreCase("Binary")) {
-                g2d.setColor(new Color(0, 0, 255)); // Blue for "Binary"
+                g2d.setColor(new Color(0, 0, 255));
             } else if (cleanWord.equalsIgnoreCase("Hardware")) {
-                g2d.setColor(new Color(255, 0, 0)); // Red for "Hardware"
+                g2d.setColor(new Color(255, 0, 0));
             } else if (cleanWord.equalsIgnoreCase("Software")) {
-                g2d.setColor(new Color(0, 128, 0)); // Green for "Software"
+                g2d.setColor(new Color(0, 128, 0));
             } else if (cleanWord.equalsIgnoreCase("Internet")) {
-                g2d.setColor(new Color(255, 162, 0)); // Orange for "Internet"
+                g2d.setColor(new Color(255, 162, 0));
             } else {
-                g2d.setColor(Color.BLACK); // Default color for other words
+                g2d.setColor(Color.BLACK);
             }
 
-            // Draw the word (including punctuation)
             g2d.drawString(word, currentX, y);
             currentX += fm.stringWidth(word + " ");
         }
