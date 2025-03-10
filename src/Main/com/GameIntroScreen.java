@@ -668,10 +668,9 @@ class GameMainScreen extends JPanel {
                         }
                     }
                 }
-                g2d.setColor(Color.YELLOW); // Yellow for the remaining text
+                g2d.setColor(Color.YELLOW);
                 g2d.drawString(remainingText, textX, textY);
 
-                // Draw the disappearing text in white, one letter at a time
                 g2d.setColor(Color.BLACK);
                 for (int i = -1; i <= 1; i++) {
                     for (int j = -1; j <= 1; j++) {
@@ -680,28 +679,24 @@ class GameMainScreen extends JPanel {
                         }
                     }
                 }
-                g2d.setColor(Color.WHITE); // White for the disappearing text
+                g2d.setColor(Color.WHITE);
                 g2d.drawString(whiteText, textX + fm.stringWidth(remainingText), textY);
             }
         }
 
-        // Draw sparkles around the queen
+        // Drawing the sparkles
         Graphics2D g2d = (Graphics2D) g;
-        for (int i = 0; i < 20; i++) { // Increase the number of sparkles
-            // Randomly position sparkles around the queen (but not inside her body)
+        for (int i = 0; i < 20; i++) {
             int sparkleX, sparkleY;
             do {
                 sparkleX = queenX + (int) (Math.random() * (newQueenWidth + 100)) - 50; // Wider scatter area
                 sparkleY = queenY + (int) (Math.random() * (newQueenHeight + 100)) - 50; // Wider scatter area
             } while (sparkleX >= queenX && sparkleX <= queenX + newQueenWidth && sparkleY >= queenY && sparkleY <= queenY + newQueenHeight);
 
-            // Randomize sparkle size
-            int sparkleSize = 5 + (int) (Math.random() * 5); // Vary size between 5 and 10
+            int sparkleSize = 5 + (int) (Math.random() * 5);
 
-            // Use a solid white color with the current alpha value
             g2d.setColor(new Color(255, 255, 255, sparkleAlpha));
 
-            // Draw the sparkle as a star shape
             int[] xPoints = {
                     sparkleX, sparkleX + sparkleSize / 4, sparkleX + sparkleSize / 2, sparkleX + sparkleSize / 4, sparkleX,
                     sparkleX - sparkleSize / 4, sparkleX - sparkleSize / 2, sparkleX - sparkleSize / 4
