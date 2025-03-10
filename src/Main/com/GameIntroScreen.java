@@ -359,20 +359,20 @@ class GameMainScreen extends JPanel {
     private Timer queenMoveTimer;
     private boolean queenMoveStarted = false;
 
-    private Image introTextBoxImage; // New image for the intro text box
-    private int introTextBoxX; // X position of the intro text box
-    private int introTextBoxY; // Y position of the intro text box
-    private int introTextBoxWidth; // Width of the intro text box
-    private int introTextBoxHeight; // Height of the intro text box
-    private Timer introTextBoxMoveTimer; // Timer for moving the intro text box to the right
-    private boolean introTextBoxVisible = false; // Flag to control visibility of the intro text box
-    private boolean introTextBoxStopped = false; // Flag to check if the intro text box has stopped moving
+    private Image introTextBoxImage;
+    private int introTextBoxX;
+    private int introTextBoxY;
+    private int introTextBoxWidth;
+    private int introTextBoxHeight;
+    private Timer introTextBoxMoveTimer;
+    private boolean introTextBoxVisible = false;
+    private boolean introTextBoxStopped = false;
 
-    private Image subTextBoxImage; // New image for the sub-text box
+    private Image subTextBoxImage;
 
     private String queenName = "QUEEN BINARY";
-    private int queenNameIndex = 0; // For appearance animation
-    private int queenNameDisappearIndex = queenName.length(); // For disappearance animation
+    private int queenNameIndex = 0;
+    private int queenNameDisappearIndex = queenName.length();
     private Timer queenNameTimer;
     private Timer queenNameDisappearTimer;
     private boolean queenNameVisible = false;
